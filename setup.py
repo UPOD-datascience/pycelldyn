@@ -31,7 +31,6 @@ setuptools.setup(
     python_requires=PYTHON_REQ,
     license=LICENSE,
     packages=['pycelldyn'],
-    package_data={'kipy': ['dictionaries/*.xlsx']},
     install_requires=['missingno>=0.5.2',
                       'numpy>=1.23.5',
                       'openpyxl>=3.0.10',
