@@ -159,6 +159,12 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-# Ignore PowerPoint files
+# PowerPoint files
 *.ppt
 *.pptx
+
+# Images
+# Thumbnails
+Thumbs.db
+
+
