@@ -21,4 +21,4 @@ Additionally, examples of basic usage can be found in the accompanying notebooks
 ## 👨‍🔧 Issues and suggestions
 Please raise any issues and suggestions [here](https://github.com/UPOD-datascience/pycelldyn/issues).
 
-[^1]: Original cell icons created by [Freepik - Flaticon](https://www.flaticon.com/free-icons/cell).
+[^1]: Original cell icon created by [Freepik - Flaticon](https://www.flaticon.com/free-icons/cell).
