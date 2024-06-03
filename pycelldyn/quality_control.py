@@ -91,7 +91,7 @@ def perform_qc(df, qc_types=['wbc_scatter', 'rbc_scatter', 'plausible_range', 'f
                     pass
 
                 case 'standard_values':
-                    pass
+                    df_qc = qc_standard_values(df_qc)
 
                 case '_':
                     print(f"{qc} is not a valid QC. It will be skipped.")
@@ -280,5 +280,101 @@ def qc_rbc(df, machine=None, verbose=True):
         else:
             if verbose:
                 print(f"\tColumn {col} not present in DataFrame. No RBC QC performed.")
+
+    return df_qc
+
+
+#%%
+def qc_standard_values(df, machine=None, verbose=True):
+    """ `qc_standard_values`
+
+    Perform quality control (QC) by removing rows that do *not* have 
+    a predefined standard value.
+
+    Namely, it looks at the following parameters and their corresponding
+    (standard) values:
+    
+    TODO: What is this for? Why remove rows?
+    TODO: Why only these parameters?
+    TODO: Why hemoglobin in NL units?
+    
+    | Parameter                             | Value       | Additional comments |
+    |---------------------------------------|-------------|---------------------|
+    | `rbc_intracellular_complexity`        | `182`       | |
+    | `rbc_population_position`             | `85`        | |
+    | `neutrophil_size_mean`                | `140`       | |
+    | `neutrophil_intracellular_complexity` | `150`       | |
+    | `neutrophil_lobularity_polarized`     | `125`       | |
+    | `neutrophil_lobularity_depolarized`   | `28`        | |
+    | `neutrophil_dna_staining`             | `69`        | |
+    | `lymphocyte_size_mean`                | `100`       | |
+    | `lymphocyte_intracellular_complexity` | `75`        | |
+    | `hb_nl`                               | `6.206e-21` | Hemoglobin (in NL units) |
+    | `mch_usa`                             | `0.6206`    | Mean corpuscular hemoglobin (in USA units) |
+    | `mchc_usa`                            | `0.6206`    | Mean corpuscular hemoglobin concentration (in USA units) |
+    | `rbc_intracellular_complexity_cv`     | `1.59341`   | |
+    | `rbc_population_position_cv`          | `7.2`       | |
+            
+    Parameters
+    ----------
+    df : pandas DataFrame
+        DataFrame with the clean data to be checked.
+
+        !!! tip
+            Cleaning can be done using the function clean_dataframe
+
+    machine : str
+        What machine does the data correspond to. Possible values are:
+
+        * `sapphire` or `sapph` - Sapphire
+        * `alinity` or `alin` - Alinity hq
+
+        !!! info
+            No functionality yet, but might be useful in the future.
+
+    verbose : bool
+        Define if verbose output will be printed (`True`) or not (`False`).
+
+    Returns
+    -------
+    df_qc : pandas DataFrame
+        DataFrame with quality controlled data.
+    """
+
+    df_qc = df.copy()
+
+    # Pair of relevant columns and standard values.
+    cols_standard_values = {'rbc_intracellular_complexity': 182,
+                            'rbc_population_position': 85,
+                            'neutrophil_size_mean': 140,
+                            'neutrophil_intracellular_complexity': 150,
+                            'neutrophil_lobularity_polarized': 125,
+                            'neutrophil_lobularity_depolarized': 28,
+                            'neutrophil_dna_staining': 69,
+                            'lymphocyte_size_mean': 100,
+                            'lymphocyte_intracellular_complexity': 75,
+                            'hb_nl': 6.206e-21,
+                            'mch_usa': 0.6206,
+                            'mchc_usa': 0.6206,
+                            'rbc_intracellular_complexity_cv': 1.59341,
+                            'rbc_population_position_cv': 7.2,
+                            }
+    
+    for col, value in cols_standard_values:
+
+        # Perform QC only when the correpsonding column is present 
+        # in the DataFrame.
+        if col in df_qc.columns:
+
+            # Remove rows that do not have the corresponding value.
+            df_qc = df.loc[lambda x: x[col] != value]
+            
+            if verbose:
+                print(f"\tQC performed on {col}.")
+
+        # Otherwise, do nothing.
+        else:
+            if verbose:
+                print(f"\tColumn {col} not present in DataFrame. No standard value QC performed.")
 
     return df_qc
