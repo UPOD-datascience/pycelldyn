@@ -3,6 +3,65 @@
 miscellaneous.py
 Handy miscellaneous functions.
 """
+import pandas as pd
+import pathlib
+
+#%%
+def read_data_dictionary(path_dictionary_file, machine=None, verbose=True):
+    """ `read_data_dictionary`
+    
+    Read an (Excel) data dictionary file.
+    
+    !!! info
+        The name of the Excel sheet should correspond to the `machine` type 
+        (see below).
+
+    Parameters
+    ----------
+    path_dictionary_file : pathlib.Path or str
+        Path to the data dictionary (Excel) file.
+        
+    machine : str
+        What machine does the data correspond to. Possible values are:
+        
+        * `sapphire` or `sapph` - Sapphire
+        * `alinity` or `alin` - Alinity hq
+
+    verbose : bool
+        Define if verbose output will be printed (`True`) or not (`False`).
+
+    Returns
+    -------
+    df_data_dictionary : pandas DataFrame
+        pandas DataFrame version of the data dictionary defined in the
+        file `path_dictionary`.
+    """    
+    
+    # Make sure that the given path is a pathlib.Path.
+    path_dictionary_file = pathlib.Path(path_dictionary_file)
+
+    # Check that data dictionary exists.
+    if not path_dictionary_file.exists():
+        raise Exception(f"Data dictionary {path_dictionary_file} does not exist.")
+
+    # Get the proper sheet name.
+    # Notice we use `with open` to avoid the issue of the dictionary file
+    # not being closed. See https://github.com/pandas-dev/pandas/issues/29803#issuecomment-1075031412
+    with open(path_dictionary_file, 'rb') as f:
+        excel_file = pd.ExcelFile(f)
+    sheet_names = [sheet for sheet in excel_file.sheet_names if machine in sheet.lower()]
+    sheet_name = sheet_names[0]
+
+    # Read the dictionary.
+    with open(path_dictionary_file, 'rb') as f:
+        df_data_dictionary = pd.read_excel(f,
+                                      engine='openpyxl',
+                                      sheet_name=sheet_name,
+                                      header=0)
+        
+    # df_data_dictionary = df_data_dictionary.set_index('Computer name')
+        
+    return df_data_dictionary
 
 #%%
 def get_flag_names(cols_values):
@@ -58,7 +117,7 @@ def get_cols_wbc_scatter():
         append `_cv` to each element of `cols_wbc_measurements`. For
         example:
 
-            `cols_cv = [c + '_cv' for c in get_cols_wbc_measurements()]`
+        `cols_cv = [c + '_cv' for c in get_cols_wbc_measurements()]`
 
     Parameters
     ----------
@@ -69,7 +128,9 @@ def get_cols_wbc_scatter():
     cols_wbc_measurements : list
         List of column names that correspond to scatter measurements of WBCs.
     """
-
+    # TODO: Should we keep this function at all or should this be relegated
+    # to the QC functions exclusively?
+    
     cols_wbc_scatter = ['neutrophil_size_mean',
                         'neutrophil_intracellular_complexity',
                         'neutrophil_lobularity_polarized',

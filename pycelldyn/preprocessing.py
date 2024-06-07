@@ -8,16 +8,14 @@ import numpy as np
 import pandas as pd
 import pathlib
 
+import pycelldyn.miscellaneous as misc
+
 #%%
-def rename_columns(df, df_type, path_dictionary, verbose=True):
+def rename_columns(df, df_data_dictionary, verbose=True):
     """`rename_columns`
 
     Rename the columns so that they have computer names as defined
-    in the corresponding data dictionary.
-
-    !!! warning
-        The Excel sheet with the dictionary information should have the word
-        `df_type` in its name (case insensitive).
+    in the given data dictionary.
 
     !!! tip
         Renaming the columns should always be the first pre-processing step.
@@ -27,15 +25,12 @@ def rename_columns(df, df_type, path_dictionary, verbose=True):
     df : pandas DataFrame
         The pandas DataFrame.
 
-    df_type : str
-        DataFrame of interest. It accepts the following values:
+    df_data_dictionary : pandas DataFrame
+        DataFrame with data dictionary information. It should have
+        at least the following columns:
 
-        * `alinity`
-        * `sapphire`
-        * `sample_pairs`
-
-    path_dictionary : str, pathlib.Path
-        Location of the `.xlsx` data dictionary.
+        * `Name` - The original name of the column in the raw data
+        * `Computer name` - The computer name defined in the dictionary
 
     verbose : bool
         Define if verbose output will be printed (`True`) or not (`False`).
@@ -48,38 +43,21 @@ def rename_columns(df, df_type, path_dictionary, verbose=True):
     """
     if verbose:
         print("Renaming columns...", flush=True, end='')
-
-    # Make sure that the given path is a pathlib.Path.
-    path_dictionary = pathlib.Path(path_dictionary)
-
-    # Check that data dictionary exists.
-    if not path_dictionary.exists():
-        raise Exception(f"Data dictionary {path_dictionary} does not exist.")
-
-    # Get the proper sheet name.
-    # Notice we use `with open` to avoid the issue of the dictionary file
-    # not being closed. See https://github.com/pandas-dev/pandas/issues/29803#issuecomment-1075031412
-    with open(path_dictionary, 'rb') as f:
-        excel_file = pd.ExcelFile(f)
-    sheet_names = [sheet for sheet in excel_file.sheet_names if df_type in sheet.lower()]
-    sheet_name = sheet_names[0]
-
-    # Read the dictionary.
-    with open(path_dictionary, 'rb') as f:
-        df_dictionary = pd.read_excel(f,
-                                      engine='openpyxl',
-                                      sheet_name=sheet_name,
-                                      header=0)
-
-    # Select the columns of interest.
-    df_dictionary = df_dictionary[['Name', 'Computer name']]
+        
+    # Check that columns of interest are present in the data dictionary.
+    for col in ['Name', 'Computer name']:
+        if col not in df_data_dictionary.columns:
+            raise Exception(f"Column '{col}' not present in df_data_dictionary")
+            
+    # Select the data dictionary's columns of interest.
+    df_data_dictionary = df_data_dictionary[['Name', 'Computer name']]
 
     # Convert DataFrame to dictionary.
-    df_dictionary_dict = dict(zip(df_dictionary['Name'].values,
-                                  df_dictionary['Computer name'].values))
+    df_data_dictionary_dict = dict(zip(df_data_dictionary['Name'].values,
+                                       df_data_dictionary['Computer name'].values))
 
     # Perform the renaming.
-    df_renamed = df.rename(columns=df_dictionary_dict)
+    df_renamed = df.rename(columns=df_data_dictionary_dict)
 
     if verbose:
         print("\tDONE!")
@@ -90,15 +68,11 @@ def rename_columns(df, df_type, path_dictionary, verbose=True):
 
 
 #%%
-def clean_dataframe(df, machine, path_dictionary, cols=None, verbose=True):
+def clean_dataframe(df, df_data_dictionary, cols=None, verbose=True):
     """`clean_dataframe`
 
     Clean categorical and numerical columns of a Sapphire or Alinity
     DataFrame.
-
-    !!! warning
-        The Excel sheet with the dictionary information should have the word
-        machine name (case insensitive).
 
     !!! info
         To identify what type a column is, this function uses information
@@ -115,14 +89,12 @@ def clean_dataframe(df, machine, path_dictionary, cols=None, verbose=True):
     df : pandas DataFrame
         The pandas DataFrame.
 
-    machine : str
-        The machine of interest. It accepts the following values:
+    df_data_dictionary : pandas DataFrame
+        DataFrame with data dictionary information. It should have
+        at least the following columns:
 
-        * `sapphire`
-        * `alinity` (preferred) or `alinity hq`
-
-    path_dictionary : str, pathlib.Path
-        Location of the `.xlsx` data dictionary.
+        * `Computer name` - The computer name of each parameter.
+        * `Type` - Variable type
 
     cols : list of str
         List with the columns to be cleaned. If `None`,
@@ -140,26 +112,14 @@ def clean_dataframe(df, machine, path_dictionary, cols=None, verbose=True):
     if verbose:
         print("Cleaning columns...")
 
-    # Make sure that the given path is a pathlib.Path.
-    path_dictionary = pathlib.Path(path_dictionary)
-
-    # Check that data dictionary exists.
-    if not path_dictionary.exists():
-        raise Exception(f"Data dictionary {path_dictionary} does not exist.")
-
-    # Get the proper sheet name.
-    excel_file = pd.ExcelFile(path_dictionary)
-    sheet_names = [sheet for sheet in excel_file.sheet_names if machine.lower() in sheet.lower()]
-    sheet_name = sheet_names[0]
-
-    # Read the dictionary.
-    df_dictionary = pd.read_excel(path_dictionary,
-                                  sheet_name=sheet_name,
-                                  header=0)
-
-    # Select the columns of interest.
-    df_dictionary = df_dictionary[['Computer name', 'Unit', 'Type mapping']]
-    df_dictionary = df_dictionary.set_index('Computer name')
+    # Check that columns of interest are present in the data dictionary.
+    for col in ['Computer name', 'Type']:
+        if col not in df_data_dictionary.columns:
+            raise Exception(f"Column '{col}' not present in df_data_dictionary")
+            
+    # Select the data dictionary's columns of interest.
+    df_data_dictionary = df_data_dictionary[['Computer name', 'Type']]
+    df_data_dictionary = df_data_dictionary.set_index('Computer name')
 
 
     # Define which columns will be cleaned.
@@ -185,7 +145,7 @@ def clean_dataframe(df, machine, path_dictionary, cols=None, verbose=True):
                 print(f"- Column {col} is to be ignored.")
             continue
 
-        col_type = str(df_dictionary.loc[col, 'Type mapping']).lower()
+        col_type = str(df_data_dictionary.loc[col, 'Type']).lower()
 
         if col_type in types_numerical:
             if verbose:
