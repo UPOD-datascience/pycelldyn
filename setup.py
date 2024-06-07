@@ -38,6 +38,6 @@ setuptools.setup(
                       'pathlib>=1.0.0',
                       'scipy>=1.10.1',
                       'seaborn>=0.11.2',
-                      'statannotations>=0.5.0',
+                      # 'statannotations>=0.5.0',
                       'statsmodels>=0.13.5'],
 )
