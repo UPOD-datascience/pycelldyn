@@ -1,0 +1,85 @@
+site_name: PyCellDyn
+site_url: https://upod-datascience.github.io/pycelldyn/
+repo_url: https://github.com/UPOD-datascience/pycelldyn
+
+theme:
+  name: material
+  favicon: images/favicon.png
+  icon:
+    repo: fontawesome/brands/github
+  logo: images/icon.png
+  palette:
+    
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: pycelldyn
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to dark mode
+      primary: blue
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/lightbulb
+        name: Switch to light mode
+      primary: blue
+      
+  features:
+    - navigation.path
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top # Back-to-top button
+    - search.suggest # Search autocomplete
+    - search.highlight
+    - search.share
+    
+extra_css:
+  - stylesheets/extra.css
+
+markdown_extensions:
+  # For admonitions
+  - admonition 
+  - pymdownx.details
+  - pymdownx.superfences
+  
+  # For working with images
+  - attr_list
+  - md_in_html
+  
+plugins:
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            docstring_style: numpy
+            show_if_no_docstring: true
+  
+  # Allow for last updated info at the foot of each page.
+  - git-revision-date-localized:
+      enable_creation_date: true
+      type: iso_date
+      
+  # Allow search
+  - search
+      
+  # For showing Jupyter notebooks as pages.
+  # - mkdocs-jupyter
+  
+nav:
+  - Home: 
+    - index.md
+  - Setup: setup.md
+  - API Reference:
+    - Pre-processing: api_reference/preprocessing.md
+    - Quality control: api_reference/quality_control.md
+    - Miscellaneous: api_reference/miscellaneous.md
+  - Examples: 
+    - examples/index.md
+  
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/UPOD-datascience/pycelldyn
