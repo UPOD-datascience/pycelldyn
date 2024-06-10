@@ -2,6 +2,8 @@
 """
 quality_control.py
 Functions for performing quality control on clean data.
+
+These scripts were adapted from `quality.py` by Bram van Es.
 """
 #%%
 import numpy as np
@@ -14,7 +16,7 @@ def perform_qc(df, qc_types=['wbc_scatter', 'rbc_scatter', 'plausible_range', 'f
 
     Perform quality control (QC) on the data of the given DataFrame.
     For more information, see each of the `qc_types`.
-
+            
     Parameters
     ----------
     df : pandas DataFrame
@@ -82,7 +84,7 @@ def perform_qc(df, qc_types=['wbc_scatter', 'rbc_scatter', 'plausible_range', 'f
                     df_qc = qc_rbc(df_qc)
 
                 case 'plausible_range':
-                    pass
+                    df_qc = qc_plausible_range(df_qc)
 
                 case 'flags' | 'suspicious_flags':
                     pass
@@ -126,6 +128,10 @@ def qc_wbc_scatter(df, threshold=1e-14, machine=None, verbose=True):
     and if it is below `threshold` (which defaults to `1e-14`), it sets 
     both values (that of the parameter and its corresponding CV) to numpy's 
     `NaN`.
+    
+    !!! info
+        This function was adapted from the original implementation in
+        `quality.py` by Bram van Es.
 
     Parameters
     ----------
@@ -174,7 +180,7 @@ def qc_wbc_scatter(df, threshold=1e-14, machine=None, verbose=True):
             df_qc.loc[df[col_cv] < threshold, [col_cv, col]] = np.nan
             
             if verbose:
-                print(f"\tQC performed on {col} and {col_cv}.")
+                print(f"\tQC for WBC scatter parameters performed on {col} and {col_cv}.")
 
         # Otherwise, do nothing.
         else:
@@ -213,7 +219,11 @@ def qc_rbc(df, machine=None, verbose=True):
     | `hdw`                                 | `1e-4`    | Hemoglobin distribution width per RBC                             |
     | `rbc_hypochromic_perc`                | `1e-30`   | Hypochromic RBCs (RBCs with hemoglobin < 28 g/dL) percentage      |
     | `rbc_hyperchromic_perc`               | `1e-30`   | Hyperchromic RBC (RBCs with hemoglobin > 41 g/dL) percentage      |
-            
+    
+    !!! info
+        This function was adapted from the original implementation in
+        `quality.py` by Bram van Es.
+        
     Parameters
     ----------
     df : pandas DataFrame
@@ -274,7 +284,7 @@ def qc_rbc(df, machine=None, verbose=True):
             df_qc.loc[df[col] < threshold, col] = np.nan
             
             if verbose:
-                print(f"\tQC performed on {col}.")
+                print(f"\tQC for RBCs performed on {col}.")
 
         # Otherwise, do nothing.
         else:
@@ -314,7 +324,11 @@ def qc_standard_values(df, machine=None, verbose=True):
     | `mchc_usa`                            | `0.6206`    | Mean corpuscular hemoglobin concentration (in USA units) |
     | `rbc_intracellular_complexity_cv`     | `1.59341`   | |
     | `rbc_population_position_cv`          | `7.2`       | |
-            
+    
+    !!! info
+        This function was adapted from the original implementation in
+        `quality.py` by Bram van Es.
+        
     Parameters
     ----------
     df : pandas DataFrame
@@ -362,7 +376,7 @@ def qc_standard_values(df, machine=None, verbose=True):
     
     for col, value in cols_standard_values:
 
-        # Perform QC only when the correpsonding column is present 
+        # Perform QC only when the corresponding column is present 
         # in the DataFrame.
         if col in df_qc.columns:
 
@@ -370,11 +384,114 @@ def qc_standard_values(df, machine=None, verbose=True):
             df_qc = df.loc[lambda x: x[col] != value]
             
             if verbose:
-                print(f"\tQC performed on {col}.")
+                print(f"\tQC for standard values performed on {col}.")
 
         # Otherwise, do nothing.
         else:
             if verbose:
                 print(f"\tColumn {col} not present in DataFrame. No standard value QC performed.")
+
+    return df_qc
+
+
+#%%
+def qc_plausible_range(df, df_data_dictionary, machine=None, verbose=True):
+    """ `qc_plausible_range`
+
+    Perform quality control (QC) by converting values that are below
+    or above an given threshold (defined in the data dictionary).
+    
+    TODO: Why convert to NaN and not clip?
+    
+    !!! info
+        This function was adapted from the original implementation in
+        `quality.py` by Bram van Es.
+        
+    Parameters
+    ----------
+    df : pandas DataFrame
+        DataFrame with the clean data to be checked.
+
+        !!! tip
+            Cleaning can be done using the function clean_dataframe
+            
+    df_data_dictionary : pandas DataFrame
+        DataFrame with data dictionary information. It should have
+        at least the following columns:
+
+        * `Computer name` - The computer name of each parameter.
+        * `Min` - Minimal allowed value
+        * `Max` - Maximum allowed value
+        
+        !!! tip
+            If the parameter has no min or max values, these should be
+            filled in as a single dash (`-`).
+
+    machine : str
+        What machine does the data correspond to. Possible values are:
+
+        * `sapphire` or `sapph` - Sapphire
+        * `alinity` or `alin` - Alinity hq
+
+        !!! info
+            No functionality yet, but might be useful in the future.
+
+    verbose : bool
+        Define if verbose output will be printed (`True`) or not (`False`).
+
+    Returns
+    -------
+    df_qc : pandas DataFrame
+        DataFrame with quality controlled data.
+    """
+
+    df_qc = df.copy()
+    
+    # Check that columns of interest are present in the data dictionary.
+    cols_interest = ['Computer name', 'Min', 'Max']
+    for col in cols_interest:
+        if col not in df_data_dictionary.columns:
+            raise Exception(f"Column '{col}' not present in df_data_dictionary")
+            
+    # Select the data dictionary's columns of interest.
+    df_data_dictionary = df_data_dictionary[cols_interest]
+    df_data_dictionary = df_data_dictionary.set_index('Computer name')
+    
+    # Make sure that Min and Max columns are cast to floats properly.
+    # `-` are replaced to `np.nan`.
+    for col in ['Min', 'Max']:
+        df_data_dictionary[col] = df_data_dictionary[col].replace('-', np.nan)
+        df_data_dictionary[col] = df_data_dictionary[col].astype(float).fillna(np.nan)
+
+
+    # Try to perform QC on all data columns.
+    for col in df_qc.columns:
+
+        # Check that data column exists in the data dictionary.
+        if col in df_data_dictionary.index:
+
+            col_min = df_data_dictionary.loc[col, 'Min']
+            col_max = df_data_dictionary.loc[col, 'Max']
+            
+            # Perform QC only when an existing min limit is found.
+            if col_min == col_min:
+                df_qc.loc[df_qc[col] < col_min, col] = np.nan
+                if verbose:
+                    print(f"\tQC for plausible range (min = {col_min}) performed on {col}.")
+            else:
+                print(f"\tQC for plausible range (min) NOT performed on {col} due to NaN min value.")
+            
+            # Perform QC only when an existing max limit is found.
+            if col_max == col_max:
+                df_qc.loc[df_qc[col] > col_max, col] = np.nan
+                if verbose:
+                    print(f"\tQC for plausible range (max = {col_max}) performed on {col}.")
+            else:
+                print(f"\tQC for plausible range (max) NOT performed on {col} due to NaN max value.")
+
+        # If the column does not exist, do nothing.
+        else:
+            if verbose:
+                print(f"\tColumn {col} not present df_data_dictionary. No plausible range QC performed.")
 
     return df_qc
