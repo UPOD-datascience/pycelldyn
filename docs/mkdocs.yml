@@ -1,6 +1,8 @@
 site_name: PyCellDyn
+site_author: Arturo Moncada-Torres
 site_url: https://upod-datascience.github.io/pycelldyn/
 repo_url: https://github.com/UPOD-datascience/pycelldyn
+watch: [mkdocs.yml, docs, ../README.md, ../pycelldyn]
 
 theme:
   name: material
@@ -56,6 +58,10 @@ plugins:
           options:
             docstring_style: numpy
             show_if_no_docstring: true
+            show_source: true
+            show_symbol_type_heading: true
+            show_symbol_type_toc: true
+            summary: true
   
   # Allow for last updated info at the foot of each page.
   - git-revision-date-localized:
