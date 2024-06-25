@@ -1,0 +1,2606 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Arturo Moncada-Torres">
+      
+      
+        <link rel="canonical" href="https://upod-datascience.github.io/pycelldyn/api_reference/quality_control/">
+      
+      
+        <link rel="prev" href="../preprocessing/">
+      
+      
+        <link rel="next" href="../miscellaneous/">
+      
+      
+      <link rel="icon" href="../../images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.0, mkdocs-material-9.5.27">
+    
+    
+      
+        <title>Quality control - PyCellDyn</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6543a935.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="pycelldyn" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#pycelldyn.perform_qc" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="PyCellDyn" class="md-header__button md-logo" aria-label="PyCellDyn" data-md-component="logo">
+      
+  <img src="../../images/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PyCellDyn
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Quality control
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="pycelldyn" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7M9 21v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1m3-17a5 5 0 0 0-5 5c0 2.05 1.23 3.81 3 4.58V16h4v-2.42c1.77-.77 3-2.53 3-4.58a5 5 0 0 0-5-5Z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7M9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7 0-.24-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91 1.61 0 2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08Z"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/UPOD-datascience/pycelldyn" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="PyCellDyn" class="md-nav__button md-logo" aria-label="PyCellDyn" data-md-component="logo">
+      
+  <img src="../../images/icon.png" alt="logo">
+
+    </a>
+    PyCellDyn
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/UPOD-datascience/pycelldyn" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../.." class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Home
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setup
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    API Reference
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../preprocessing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pre-processing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Quality control
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Quality control
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pycelldyn.perform_qc" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;perform_qc
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycelldyn.qc_wbc_scatter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;qc_wbc_scatter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycelldyn.qc_rbc" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;qc_rbc
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycelldyn.qc_standard_values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;qc_standard_values
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycelldyn.qc_plausible_range" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;qc_plausible_range
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../miscellaneous/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Miscellaneous
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../examples/" class="md-nav__link ">
+              
+  
+  <span class="md-ellipsis">
+    Examples
+  </span>
+  
+
+            </a>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Examples
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#pycelldyn.perform_qc" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;perform_qc
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycelldyn.qc_wbc_scatter" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;qc_wbc_scatter
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycelldyn.qc_rbc" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;qc_rbc
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycelldyn.qc_standard_values" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;qc_standard_values
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pycelldyn.qc_plausible_range" class="md-nav__link">
+    <span class="md-ellipsis">
+      <code class="doc-symbol doc-symbol-toc doc-symbol-function"></code>&nbsp;qc_plausible_range
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+  <h1>Quality control</h1>
+
+<p>These functions perform quality control checks on the clean data.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p><strong>There is no golden standard for performing quality control checks!</strong></p>
+<p>Be careful when choosing which checks to apply, since they can have
+very different effects in your data. This could potentially result in,
+for example, inappropriate patient selection or bias.</p>
+<p>Please make sure you consult with an UPOD expert.</p>
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="pycelldyn.perform_qc"></a>
+    <div class="doc doc-contents first">
+
+      <p><code>perform_qc</code></p>
+<p>Perform quality control (QC) on the data of the given DataFrame.
+For more information, see each of the <code>qc_types</code>.</p>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>df</code></td>
+            <td>
+                  <code>pandas DataFrame</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with the clean data to be checked.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Cleaning can be done using the function <code>clean_dataframe</code></p>
+</div>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>qc_types</code></td>
+            <td>
+                  <code> list of str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>List of quality control types. Possible values for each element are:</p>
+<table>
+<thead>
+<tr>
+<th>QC type</th>
+<th>Description</th>
+<th>Additional comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>wbc_scatter</code> or <code>leuko_scatter</code></td>
+<td>QC of parameters regarding the scatter measurement of white blood cells</td>
+<td>Not to be confused with WBC counts or sizes</td>
+</tr>
+<tr>
+<td><code>rbc</code> or <code>erythro</code></td>
+<td>QC of (some) red blood cell parameters.</td>
+<td>Not all RBC parameters get QC!</td>
+</tr>
+<tr>
+<td><code>plausible_range</code></td>
+<td>QC of plausible ranges of different parameters</td>
+<td>Min and max values are defined in the corresponding data dictionary</td>
+</tr>
+<tr>
+<td><code>flags</code> or <code>suspicious_flags</code></td>
+<td>QC based on the presence of suspicious values (defined by corresponding flags)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>fail</code> or <code>failure</code></td>
+<td>Set parameter values to <code>NaN</code> based on corresponding flags)</td>
+<td></td>
+</tr>
+<tr>
+<td><code>standard_values</code></td>
+<td>Set standard values to a given set of parameters</td>
+<td>Not recommended!</td>
+</tr>
+<tr>
+<td><code>all</code></td>
+<td>All of the previous QC</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+              </div>
+            </td>
+            <td>
+                  <code>[&#39;wbc_scatter&#39;, &#39;rbc_scatter&#39;, &#39;plausible_range&#39;, &#39;flags&#39;]</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>machine</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>What machine does the data correspond to. Possible values are:</p>
+<ul>
+<li><code>sapphire</code> or <code>sapph</code> - Sapphire</li>
+<li><code>alinity</code> or <code>alin</code> - Alinity hq</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>No functionality yet, but might be useful in the future.</p>
+</div>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>verbose</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Define if verbose output will be printed (<code>True</code>) or not (<code>False</code>).</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>df_qc</code></td>            <td>
+                  <code>pandas DataFrame</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with quality controlled data.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>pycelldyn/quality_control.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 14</span>
+<span class="normal"> 15</span>
+<span class="normal"> 16</span>
+<span class="normal"> 17</span>
+<span class="normal"> 18</span>
+<span class="normal"> 19</span>
+<span class="normal"> 20</span>
+<span class="normal"> 21</span>
+<span class="normal"> 22</span>
+<span class="normal"> 23</span>
+<span class="normal"> 24</span>
+<span class="normal"> 25</span>
+<span class="normal"> 26</span>
+<span class="normal"> 27</span>
+<span class="normal"> 28</span>
+<span class="normal"> 29</span>
+<span class="normal"> 30</span>
+<span class="normal"> 31</span>
+<span class="normal"> 32</span>
+<span class="normal"> 33</span>
+<span class="normal"> 34</span>
+<span class="normal"> 35</span>
+<span class="normal"> 36</span>
+<span class="normal"> 37</span>
+<span class="normal"> 38</span>
+<span class="normal"> 39</span>
+<span class="normal"> 40</span>
+<span class="normal"> 41</span>
+<span class="normal"> 42</span>
+<span class="normal"> 43</span>
+<span class="normal"> 44</span>
+<span class="normal"> 45</span>
+<span class="normal"> 46</span>
+<span class="normal"> 47</span>
+<span class="normal"> 48</span>
+<span class="normal"> 49</span>
+<span class="normal"> 50</span>
+<span class="normal"> 51</span>
+<span class="normal"> 52</span>
+<span class="normal"> 53</span>
+<span class="normal"> 54</span>
+<span class="normal"> 55</span>
+<span class="normal"> 56</span>
+<span class="normal"> 57</span>
+<span class="normal"> 58</span>
+<span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">perform_qc</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">qc_types</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;wbc_scatter&#39;</span><span class="p">,</span> <span class="s1">&#39;rbc_scatter&#39;</span><span class="p">,</span> <span class="s1">&#39;plausible_range&#39;</span><span class="p">,</span> <span class="s1">&#39;flags&#39;</span><span class="p">],</span> <span class="n">machine</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; `perform_qc`</span>
+
+<span class="sd">    Perform quality control (QC) on the data of the given DataFrame.</span>
+<span class="sd">    For more information, see each of the `qc_types`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas DataFrame</span>
+<span class="sd">        DataFrame with the clean data to be checked.</span>
+
+<span class="sd">        !!! tip</span>
+<span class="sd">            Cleaning can be done using the function `clean_dataframe`</span>
+
+<span class="sd">    qc_types :  list of str</span>
+<span class="sd">        List of quality control types. Possible values for each element are:</span>
+
+<span class="sd">        | QC type                            | Description                                                     | Additional comments                                               |</span>
+<span class="sd">        |------------------------------------|-----------------------------------------------------------------|-------------------------------------------------------------------|</span>
+<span class="sd">        | `wbc_scatter` or `leuko_scatter`   | QC of parameters regarding the scatter measurement of white blood cells | Not to be confused with WBC counts or sizes               |</span>
+<span class="sd">        | `rbc` or `erythro`                 | QC of (some) red blood cell parameters.                         | Not all RBC parameters get QC!                                    |</span>
+<span class="sd">        | `plausible_range`                  | QC of plausible ranges of different parameters                  | Min and max values are defined in the corresponding data dictionary |</span>
+<span class="sd">        | `flags` or `suspicious_flags`      | QC based on the presence of suspicious values (defined by corresponding flags) |                                                    |</span>
+<span class="sd">        | `fail` or `failure`                | Set parameter values to `NaN` based on corresponding flags)     |                                                                   |</span>
+<span class="sd">        | `standard_values`                  | Set standard values to a given set of parameters                | Not recommended!                                                  |</span>
+<span class="sd">        | `all`                              | All of the previous QC                                          |                                                                   |</span>
+
+<span class="sd">    machine : str</span>
+<span class="sd">        What machine does the data correspond to. Possible values are:</span>
+
+<span class="sd">        * `sapphire` or `sapph` - Sapphire</span>
+<span class="sd">        * `alinity` or `alin` - Alinity hq</span>
+
+<span class="sd">        !!! info</span>
+<span class="sd">            No functionality yet, but might be useful in the future.</span>
+
+<span class="sd">    verbose : bool</span>
+<span class="sd">        Define if verbose output will be printed (`True`) or not (`False`).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df_qc : pandas DataFrame</span>
+<span class="sd">        DataFrame with quality controlled data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df_qc</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Check that qc_types is not empty</span>
+    <span class="k">if</span> <span class="n">qc_types</span> <span class="o">==</span> <span class="p">[]:</span>
+        <span class="k">raise</span><span class="p">(</span><span class="s2">&quot;qc_types is empty.&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check if `all` QCs are needed.</span>
+    <span class="n">qc_types_possible</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;wbc_scatter&#39;</span><span class="p">,</span> <span class="s1">&#39;rbc_scatter&#39;</span><span class="p">,</span> <span class="s1">&#39;plausible_range&#39;</span><span class="p">,</span> <span class="s1">&#39;flags&#39;</span><span class="p">,</span> <span class="s1">&#39;fail&#39;</span><span class="p">,</span> <span class="s1">&#39;standard_values&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">qc_types</span> <span class="o">==</span> <span class="s1">&#39;all&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">&#39;all&#39;</span> <span class="ow">in</span> <span class="n">qc_types</span><span class="p">):</span>
+        <span class="n">qc_types</span> <span class="o">=</span> <span class="n">qc_types_possible</span>
+
+
+    <span class="c1"># Perform each of the QC types.</span>
+    <span class="k">for</span> <span class="n">qc</span> <span class="ow">in</span> <span class="n">qc_types</span><span class="p">:</span>
+
+        <span class="k">if</span> <span class="n">qc</span> <span class="ow">in</span> <span class="n">qc_types_possible</span><span class="p">:</span>
+
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Performing QC </span><span class="si">{</span><span class="n">qc</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">flush</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="k">match</span> <span class="n">qc</span><span class="p">:</span>
+
+                <span class="k">case</span> <span class="s1">&#39;wbc_scatter&#39;</span> <span class="o">|</span> <span class="s1">&#39;leuko_scatter&#39;</span><span class="p">:</span>
+                    <span class="n">df_qc</span> <span class="o">=</span> <span class="n">qc_wbc_scatter</span><span class="p">(</span><span class="n">df_qc</span><span class="p">)</span>
+
+                <span class="k">case</span> <span class="s1">&#39;rbc&#39;</span> <span class="o">|</span> <span class="s1">&#39;erythro&#39;</span><span class="p">:</span>
+                    <span class="n">df_qc</span> <span class="o">=</span> <span class="n">qc_rbc</span><span class="p">(</span><span class="n">df_qc</span><span class="p">)</span>
+
+                <span class="k">case</span> <span class="s1">&#39;plausible_range&#39;</span><span class="p">:</span>
+                    <span class="n">df_qc</span> <span class="o">=</span> <span class="n">qc_plausible_range</span><span class="p">(</span><span class="n">df_qc</span><span class="p">)</span>
+
+                <span class="k">case</span> <span class="s1">&#39;flags&#39;</span> <span class="o">|</span> <span class="s1">&#39;suspicious_flags&#39;</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+                <span class="k">case</span> <span class="s1">&#39;fail&#39;</span> <span class="o">|</span> <span class="s1">&#39;failure&#39;</span><span class="p">:</span>
+                    <span class="k">pass</span>
+
+                <span class="k">case</span> <span class="s1">&#39;standard_values&#39;</span><span class="p">:</span>
+                    <span class="n">df_qc</span> <span class="o">=</span> <span class="n">qc_standard_values</span><span class="p">(</span><span class="n">df_qc</span><span class="p">)</span>
+
+                <span class="k">case</span><span class="w"> </span><span class="s1">&#39;</span><span class="k">_</span><span class="s1">&#39;:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">qc</span><span class="si">}</span><span class="s2"> is not a valid QC. It will be skipped.&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">DONE!&quot;</span><span class="p">)</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">qc</span><span class="si">}</span><span class="s2"> is not a valid QC. It will be skipped.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_qc</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="pycelldyn.qc_wbc_scatter"></a>
+    <div class="doc doc-contents first">
+
+      <p><code>qc_wbc_scatter</code></p>
+<p>Perform quality control (QC) on the white blood cells (WBCs) scatter
+measurement parameters.</p>
+<p>Namely, it looks at the coefficient of variance (CV) of the following
+parameters:</p>
+<ul>
+<li><code>neutrophil_size_mean</code></li>
+<li><code>neutrophil_intracellular_complexity</code></li>
+<li><code>neutrophil_lobularity_polarized</code></li>
+<li><code>neutrophil_lobularity_depolarized</code></li>
+<li><code>neutrophil_dna_staining</code></li>
+<li><code>lymphocyte_size_mean</code></li>
+<li><code>lymphocyte_intracellular_complexity</code></li>
+</ul>
+<p>and if it is below <code>threshold</code> (which defaults to <code>1e-14</code>), it sets 
+both values (that of the parameter and its corresponding CV) to numpy's 
+<code>NaN</code>.</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This function was adapted from the original implementation in
+<code>quality.py</code> by Bram van Es.</p>
+</div>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>df</code></td>
+            <td>
+                  <code>pandas DataFrame</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with the clean data to be checked.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Cleaning can be done using the function clean_dataframe</p>
+</div>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>threshold</code></td>
+            <td>
+                  <code>float</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>When the CV of any parameter is below the threshold, both the
+parameter and its CV will be replaced by a <code>NaN</code>.</p>
+              </div>
+            </td>
+            <td>
+                  <code>1e-14</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>machine</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>What machine does the data correspond to. Possible values are:</p>
+<ul>
+<li><code>sapphire</code> or <code>sapph</code> - Sapphire</li>
+<li><code>alinity</code> or <code>alin</code> - Alinity hq</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>No functionality yet, but might be useful in the future.</p>
+</div>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>verbose</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Define if verbose output will be printed (<code>True</code>) or not (<code>False</code>).</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>df_qc</code></td>            <td>
+                  <code>pandas DataFrame</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with quality controlled data.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>pycelldyn/quality_control.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span>
+<span class="normal">178</span>
+<span class="normal">179</span>
+<span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">qc_wbc_scatter</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">1e-14</span><span class="p">,</span> <span class="n">machine</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; `qc_wbc_scatter`</span>
+
+<span class="sd">    Perform quality control (QC) on the white blood cells (WBCs) scatter</span>
+<span class="sd">    measurement parameters.</span>
+
+<span class="sd">    Namely, it looks at the coefficient of variance (CV) of the following</span>
+<span class="sd">    parameters:</span>
+
+<span class="sd">    * `neutrophil_size_mean`</span>
+<span class="sd">    * `neutrophil_intracellular_complexity`</span>
+<span class="sd">    * `neutrophil_lobularity_polarized`</span>
+<span class="sd">    * `neutrophil_lobularity_depolarized`</span>
+<span class="sd">    * `neutrophil_dna_staining`</span>
+<span class="sd">    * `lymphocyte_size_mean`</span>
+<span class="sd">    * `lymphocyte_intracellular_complexity`</span>
+
+<span class="sd">    and if it is below `threshold` (which defaults to `1e-14`), it sets </span>
+<span class="sd">    both values (that of the parameter and its corresponding CV) to numpy&#39;s </span>
+<span class="sd">    `NaN`.</span>
+
+<span class="sd">    !!! info</span>
+<span class="sd">        This function was adapted from the original implementation in</span>
+<span class="sd">        `quality.py` by Bram van Es.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas DataFrame</span>
+<span class="sd">        DataFrame with the clean data to be checked.</span>
+
+<span class="sd">        !!! tip</span>
+<span class="sd">            Cleaning can be done using the function clean_dataframe</span>
+
+<span class="sd">    threshold : float</span>
+<span class="sd">        When the CV of any parameter is below the threshold, both the</span>
+<span class="sd">        parameter and its CV will be replaced by a `NaN`.</span>
+
+<span class="sd">    machine : str</span>
+<span class="sd">        What machine does the data correspond to. Possible values are:</span>
+
+<span class="sd">        * `sapphire` or `sapph` - Sapphire</span>
+<span class="sd">        * `alinity` or `alin` - Alinity hq</span>
+
+<span class="sd">        !!! info</span>
+<span class="sd">            No functionality yet, but might be useful in the future.</span>
+
+<span class="sd">    verbose : bool</span>
+<span class="sd">        Define if verbose output will be printed (`True`) or not (`False`).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df_qc : pandas DataFrame</span>
+<span class="sd">        DataFrame with quality controlled data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">df_qc</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Get the relevant columns.</span>
+    <span class="c1"># These are the parameter names (not the CV names).</span>
+    <span class="n">cols_wbc_scatter</span> <span class="o">=</span> <span class="n">misc</span><span class="o">.</span><span class="n">get_cols_wbc_scatter</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols_wbc_scatter</span><span class="p">:</span>
+
+        <span class="c1"># Create the CV parameter name by just appending `_cv` at the end.</span>
+        <span class="n">col_cv</span> <span class="o">=</span> <span class="n">col</span> <span class="o">+</span> <span class="s1">&#39;_cv&#39;</span>
+
+        <span class="c1"># Perform QC only when both the parameter and its corresponding CV</span>
+        <span class="c1"># column are present in the DataFrame.</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">col</span> <span class="ow">in</span> <span class="n">df_qc</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">col_cv</span> <span class="ow">in</span> <span class="n">df_qc</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="n">df_qc</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">col_cv</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">,</span> <span class="p">[</span><span class="n">col_cv</span><span class="p">,</span> <span class="n">col</span><span class="p">]]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">QC for WBC scatter parameters performed on </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> and </span><span class="si">{</span><span class="n">col_cv</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Otherwise, do nothing.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Column </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> and/or </span><span class="si">{</span><span class="n">col_cv</span><span class="si">}</span><span class="s2"> not present in DataFrame. No WBC scatter QC performed.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_qc</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="pycelldyn.qc_rbc"></a>
+    <div class="doc doc-contents first">
+
+      <p><code>qc_rbc</code></p>
+<p>Perform quality control (QC) on (some) red blood cells (RBCs) parameters.</p>
+<p>Namely, it looks at the following parameters and if they are below 
+(i.e., <code>&lt;</code>), their corresponding threshold, they will be replaced by 
+numpy's <code>NaN</code>.</p>
+<p>TODO: c_mode_rtc (mode_reti) - why change to NaN when 0?</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Threshold</th>
+<th>Additional comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>reticulocytes</code></td>
+<td><code>1e-4</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>reticulocytes_perc</code></td>
+<td><code>1e-4</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>irf</code></td>
+<td><code>1e-4</code></td>
+<td>Immature reticulocyte fraction</td>
+</tr>
+<tr>
+<td><code>rbc_intracellular_complexity</code></td>
+<td><code>1e-4</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>rbc_intracellular_complexity_cv</code></td>
+<td><code>1e-4</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>rbc_population_position</code></td>
+<td><code>1e-4</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>rbc_population_position_cv</code></td>
+<td><code>1e-4</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>reticulocyte_population_position</code></td>
+<td><code>1e-4</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>reticulocyte_population_position_cv</code></td>
+<td><code>1e-4</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>mchcr</code></td>
+<td><code>1e-4</code></td>
+<td>Mean Corpuscular HGB Concentration per Reticulocyte</td>
+</tr>
+<tr>
+<td><code>mchr_nl</code></td>
+<td><code>1e-4</code></td>
+<td>Mean corpuscular hemoglobin per reticulocyte, aka reticulocyte hemoglobin content (in NL units)</td>
+</tr>
+<tr>
+<td><code>mcvr</code></td>
+<td><code>1e-4</code></td>
+<td>Mean corpuscular volume (aka mean cell volume) of reticulocytes</td>
+</tr>
+<tr>
+<td><code>hdw</code></td>
+<td><code>1e-4</code></td>
+<td>Hemoglobin distribution width per RBC</td>
+</tr>
+<tr>
+<td><code>rbc_hypochromic_perc</code></td>
+<td><code>1e-30</code></td>
+<td>Hypochromic RBCs (RBCs with hemoglobin &lt; 28 g/dL) percentage</td>
+</tr>
+<tr>
+<td><code>rbc_hyperchromic_perc</code></td>
+<td><code>1e-30</code></td>
+<td>Hyperchromic RBC (RBCs with hemoglobin &gt; 41 g/dL) percentage</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This function was adapted from the original implementation in
+<code>quality.py</code> by Bram van Es.</p>
+</div>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>df</code></td>
+            <td>
+                  <code>pandas DataFrame</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with the clean data to be checked.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Cleaning can be done using the function clean_dataframe</p>
+</div>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>machine</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>What machine does the data correspond to. Possible values are:</p>
+<ul>
+<li><code>sapphire</code> or <code>sapph</code> - Sapphire</li>
+<li><code>alinity</code> or <code>alin</code> - Alinity hq</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>No functionality yet, but might be useful in the future.</p>
+</div>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>verbose</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Define if verbose output will be printed (<code>True</code>) or not (<code>False</code>).</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>df_qc</code></td>            <td>
+                  <code>pandas DataFrame</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with quality controlled data.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>pycelldyn/quality_control.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">194</span>
+<span class="normal">195</span>
+<span class="normal">196</span>
+<span class="normal">197</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span>
+<span class="normal">233</span>
+<span class="normal">234</span>
+<span class="normal">235</span>
+<span class="normal">236</span>
+<span class="normal">237</span>
+<span class="normal">238</span>
+<span class="normal">239</span>
+<span class="normal">240</span>
+<span class="normal">241</span>
+<span class="normal">242</span>
+<span class="normal">243</span>
+<span class="normal">244</span>
+<span class="normal">245</span>
+<span class="normal">246</span>
+<span class="normal">247</span>
+<span class="normal">248</span>
+<span class="normal">249</span>
+<span class="normal">250</span>
+<span class="normal">251</span>
+<span class="normal">252</span>
+<span class="normal">253</span>
+<span class="normal">254</span>
+<span class="normal">255</span>
+<span class="normal">256</span>
+<span class="normal">257</span>
+<span class="normal">258</span>
+<span class="normal">259</span>
+<span class="normal">260</span>
+<span class="normal">261</span>
+<span class="normal">262</span>
+<span class="normal">263</span>
+<span class="normal">264</span>
+<span class="normal">265</span>
+<span class="normal">266</span>
+<span class="normal">267</span>
+<span class="normal">268</span>
+<span class="normal">269</span>
+<span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">qc_rbc</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">machine</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; `qc_rbc`</span>
+
+<span class="sd">    Perform quality control (QC) on (some) red blood cells (RBCs) parameters.</span>
+
+<span class="sd">    Namely, it looks at the following parameters and if they are below </span>
+<span class="sd">    (i.e., `&lt;`), their corresponding threshold, they will be replaced by </span>
+<span class="sd">    numpy&#39;s `NaN`.</span>
+
+<span class="sd">    TODO: c_mode_rtc (mode_reti) - why change to NaN when 0?</span>
+
+<span class="sd">    | Parameter                             | Threshold | Additional comments                                               |</span>
+<span class="sd">    |---------------------------------------|-----------|-------------------------------------------------------------------|</span>
+<span class="sd">    | `reticulocytes`                       | `1e-4`    |                                                                   |</span>
+<span class="sd">    | `reticulocytes_perc`                  | `1e-4`    |                                                                   |</span>
+<span class="sd">    | `irf`                                 | `1e-4`    | Immature reticulocyte fraction                                    |</span>
+<span class="sd">    | `rbc_intracellular_complexity`        | `1e-4`    |                                                                   |</span>
+<span class="sd">    | `rbc_intracellular_complexity_cv`     | `1e-4`    |                                                                   |</span>
+<span class="sd">    | `rbc_population_position`             | `1e-4`    |                                                                   |</span>
+<span class="sd">    | `rbc_population_position_cv`          | `1e-4`    |                                                                   |</span>
+<span class="sd">    | `reticulocyte_population_position`    | `1e-4`    |                                                                   |</span>
+<span class="sd">    | `reticulocyte_population_position_cv` | `1e-4`    |                                                                   |</span>
+<span class="sd">    | `mchcr`                               | `1e-4`    | Mean Corpuscular HGB Concentration per Reticulocyte               |</span>
+<span class="sd">    | `mchr_nl`                             | `1e-4`    | Mean corpuscular hemoglobin per reticulocyte, aka reticulocyte hemoglobin content (in NL units)|</span>
+<span class="sd">    | `mcvr`                                | `1e-4`    | Mean corpuscular volume (aka mean cell volume) of reticulocytes   |</span>
+<span class="sd">    | `hdw`                                 | `1e-4`    | Hemoglobin distribution width per RBC                             |</span>
+<span class="sd">    | `rbc_hypochromic_perc`                | `1e-30`   | Hypochromic RBCs (RBCs with hemoglobin &lt; 28 g/dL) percentage      |</span>
+<span class="sd">    | `rbc_hyperchromic_perc`               | `1e-30`   | Hyperchromic RBC (RBCs with hemoglobin &gt; 41 g/dL) percentage      |</span>
+
+<span class="sd">    !!! info</span>
+<span class="sd">        This function was adapted from the original implementation in</span>
+<span class="sd">        `quality.py` by Bram van Es.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas DataFrame</span>
+<span class="sd">        DataFrame with the clean data to be checked.</span>
+
+<span class="sd">        !!! tip</span>
+<span class="sd">            Cleaning can be done using the function clean_dataframe</span>
+
+<span class="sd">    machine : str</span>
+<span class="sd">        What machine does the data correspond to. Possible values are:</span>
+
+<span class="sd">        * `sapphire` or `sapph` - Sapphire</span>
+<span class="sd">        * `alinity` or `alin` - Alinity hq</span>
+
+<span class="sd">        !!! info</span>
+<span class="sd">            No functionality yet, but might be useful in the future.</span>
+
+<span class="sd">    verbose : bool</span>
+<span class="sd">        Define if verbose output will be printed (`True`) or not (`False`).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df_qc : pandas DataFrame</span>
+<span class="sd">        DataFrame with quality controlled data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">df_qc</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Relevant columns.</span>
+    <span class="n">cols_rbc</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;reticulocytes&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;reticulocytes_perc&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;irf&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rbc_intracellular_complexity&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rbc_intracellular_complexity_cv&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rbc_population_position&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rbc_population_position_cv&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;reticulocyte_population_position&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;reticulocyte_population_position_cv&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;mchcr&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;mchr_nl&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;mcvr&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;hdw&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rbc_hypochromic_perc&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;rbc_hyperchromic_perc&#39;</span>
+                <span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols_rbc</span><span class="p">:</span>
+
+        <span class="c1"># Perform QC only when the correpsonding column is present </span>
+        <span class="c1"># in the DataFrame.</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_qc</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+
+            <span class="c1"># Define threshold. </span>
+            <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;rbc_hypochromic_perc&#39;</span><span class="p">,</span> <span class="s1">&#39;rbc_hyperchromic_perc&#39;</span><span class="p">]:</span>
+                <span class="n">threshold</span> <span class="o">=</span> <span class="mf">1e-30</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">threshold</span> <span class="o">=</span> <span class="mf">1e-4</span>
+            <span class="n">df_qc</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">QC for RBCs performed on </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Otherwise, do nothing.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Column </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> not present in DataFrame. No RBC QC performed.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_qc</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="pycelldyn.qc_standard_values"></a>
+    <div class="doc doc-contents first">
+
+      <p><code>qc_standard_values</code></p>
+<p>Perform quality control (QC) by removing rows that do <em>not</em> have 
+a predefined standard value.</p>
+<p>Namely, it looks at the following parameters and their corresponding
+(standard) values:</p>
+<p>TODO: What is this for? Why remove rows?
+TODO: Why only these parameters?
+TODO: Why hemoglobin in NL units?</p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Additional comments</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>rbc_intracellular_complexity</code></td>
+<td><code>182</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>rbc_population_position</code></td>
+<td><code>85</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>neutrophil_size_mean</code></td>
+<td><code>140</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>neutrophil_intracellular_complexity</code></td>
+<td><code>150</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>neutrophil_lobularity_polarized</code></td>
+<td><code>125</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>neutrophil_lobularity_depolarized</code></td>
+<td><code>28</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>neutrophil_dna_staining</code></td>
+<td><code>69</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>lymphocyte_size_mean</code></td>
+<td><code>100</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>lymphocyte_intracellular_complexity</code></td>
+<td><code>75</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>hb_nl</code></td>
+<td><code>6.206e-21</code></td>
+<td>Hemoglobin (in NL units)</td>
+</tr>
+<tr>
+<td><code>mch_usa</code></td>
+<td><code>0.6206</code></td>
+<td>Mean corpuscular hemoglobin (in USA units)</td>
+</tr>
+<tr>
+<td><code>mchc_usa</code></td>
+<td><code>0.6206</code></td>
+<td>Mean corpuscular hemoglobin concentration (in USA units)</td>
+</tr>
+<tr>
+<td><code>rbc_intracellular_complexity_cv</code></td>
+<td><code>1.59341</code></td>
+<td></td>
+</tr>
+<tr>
+<td><code>rbc_population_position_cv</code></td>
+<td><code>7.2</code></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This function was adapted from the original implementation in
+<code>quality.py</code> by Bram van Es.</p>
+</div>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>df</code></td>
+            <td>
+                  <code>pandas DataFrame</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with the clean data to be checked.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Cleaning can be done using the function clean_dataframe</p>
+</div>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>machine</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>What machine does the data correspond to. Possible values are:</p>
+<ul>
+<li><code>sapphire</code> or <code>sapph</code> - Sapphire</li>
+<li><code>alinity</code> or <code>alin</code> - Alinity hq</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>No functionality yet, but might be useful in the future.</p>
+</div>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>verbose</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Define if verbose output will be printed (<code>True</code>) or not (<code>False</code>).</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>df_qc</code></td>            <td>
+                  <code>pandas DataFrame</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with quality controlled data.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>pycelldyn/quality_control.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span>
+<span class="normal">372</span>
+<span class="normal">373</span>
+<span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">qc_standard_values</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">machine</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; `qc_standard_values`</span>
+
+<span class="sd">    Perform quality control (QC) by removing rows that do *not* have </span>
+<span class="sd">    a predefined standard value.</span>
+
+<span class="sd">    Namely, it looks at the following parameters and their corresponding</span>
+<span class="sd">    (standard) values:</span>
+
+<span class="sd">    TODO: What is this for? Why remove rows?</span>
+<span class="sd">    TODO: Why only these parameters?</span>
+<span class="sd">    TODO: Why hemoglobin in NL units?</span>
+
+<span class="sd">    | Parameter                             | Value       | Additional comments |</span>
+<span class="sd">    |---------------------------------------|-------------|---------------------|</span>
+<span class="sd">    | `rbc_intracellular_complexity`        | `182`       | |</span>
+<span class="sd">    | `rbc_population_position`             | `85`        | |</span>
+<span class="sd">    | `neutrophil_size_mean`                | `140`       | |</span>
+<span class="sd">    | `neutrophil_intracellular_complexity` | `150`       | |</span>
+<span class="sd">    | `neutrophil_lobularity_polarized`     | `125`       | |</span>
+<span class="sd">    | `neutrophil_lobularity_depolarized`   | `28`        | |</span>
+<span class="sd">    | `neutrophil_dna_staining`             | `69`        | |</span>
+<span class="sd">    | `lymphocyte_size_mean`                | `100`       | |</span>
+<span class="sd">    | `lymphocyte_intracellular_complexity` | `75`        | |</span>
+<span class="sd">    | `hb_nl`                               | `6.206e-21` | Hemoglobin (in NL units) |</span>
+<span class="sd">    | `mch_usa`                             | `0.6206`    | Mean corpuscular hemoglobin (in USA units) |</span>
+<span class="sd">    | `mchc_usa`                            | `0.6206`    | Mean corpuscular hemoglobin concentration (in USA units) |</span>
+<span class="sd">    | `rbc_intracellular_complexity_cv`     | `1.59341`   | |</span>
+<span class="sd">    | `rbc_population_position_cv`          | `7.2`       | |</span>
+
+<span class="sd">    !!! info</span>
+<span class="sd">        This function was adapted from the original implementation in</span>
+<span class="sd">        `quality.py` by Bram van Es.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas DataFrame</span>
+<span class="sd">        DataFrame with the clean data to be checked.</span>
+
+<span class="sd">        !!! tip</span>
+<span class="sd">            Cleaning can be done using the function clean_dataframe</span>
+
+<span class="sd">    machine : str</span>
+<span class="sd">        What machine does the data correspond to. Possible values are:</span>
+
+<span class="sd">        * `sapphire` or `sapph` - Sapphire</span>
+<span class="sd">        * `alinity` or `alin` - Alinity hq</span>
+
+<span class="sd">        !!! info</span>
+<span class="sd">            No functionality yet, but might be useful in the future.</span>
+
+<span class="sd">    verbose : bool</span>
+<span class="sd">        Define if verbose output will be printed (`True`) or not (`False`).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df_qc : pandas DataFrame</span>
+<span class="sd">        DataFrame with quality controlled data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">df_qc</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Pair of relevant columns and standard values.</span>
+    <span class="n">cols_standard_values</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;rbc_intracellular_complexity&#39;</span><span class="p">:</span> <span class="mi">182</span><span class="p">,</span>
+                            <span class="s1">&#39;rbc_population_position&#39;</span><span class="p">:</span> <span class="mi">85</span><span class="p">,</span>
+                            <span class="s1">&#39;neutrophil_size_mean&#39;</span><span class="p">:</span> <span class="mi">140</span><span class="p">,</span>
+                            <span class="s1">&#39;neutrophil_intracellular_complexity&#39;</span><span class="p">:</span> <span class="mi">150</span><span class="p">,</span>
+                            <span class="s1">&#39;neutrophil_lobularity_polarized&#39;</span><span class="p">:</span> <span class="mi">125</span><span class="p">,</span>
+                            <span class="s1">&#39;neutrophil_lobularity_depolarized&#39;</span><span class="p">:</span> <span class="mi">28</span><span class="p">,</span>
+                            <span class="s1">&#39;neutrophil_dna_staining&#39;</span><span class="p">:</span> <span class="mi">69</span><span class="p">,</span>
+                            <span class="s1">&#39;lymphocyte_size_mean&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                            <span class="s1">&#39;lymphocyte_intracellular_complexity&#39;</span><span class="p">:</span> <span class="mi">75</span><span class="p">,</span>
+                            <span class="s1">&#39;hb_nl&#39;</span><span class="p">:</span> <span class="mf">6.206e-21</span><span class="p">,</span>
+                            <span class="s1">&#39;mch_usa&#39;</span><span class="p">:</span> <span class="mf">0.6206</span><span class="p">,</span>
+                            <span class="s1">&#39;mchc_usa&#39;</span><span class="p">:</span> <span class="mf">0.6206</span><span class="p">,</span>
+                            <span class="s1">&#39;rbc_intracellular_complexity_cv&#39;</span><span class="p">:</span> <span class="mf">1.59341</span><span class="p">,</span>
+                            <span class="s1">&#39;rbc_population_position_cv&#39;</span><span class="p">:</span> <span class="mf">7.2</span><span class="p">,</span>
+                            <span class="p">}</span>
+
+    <span class="k">for</span> <span class="n">col</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">cols_standard_values</span><span class="p">:</span>
+
+        <span class="c1"># Perform QC only when the corresponding column is present </span>
+        <span class="c1"># in the DataFrame.</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_qc</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+
+            <span class="c1"># Remove rows that do not have the corresponding value.</span>
+            <span class="n">df_qc</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">!=</span> <span class="n">value</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">QC for standard values performed on </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Otherwise, do nothing.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Column </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> not present in DataFrame. No standard value QC performed.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_qc</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="pycelldyn.qc_plausible_range"></a>
+    <div class="doc doc-contents first">
+
+      <p><code>qc_plausible_range</code></p>
+<p>Perform quality control (QC) by converting values that are below
+or above an given threshold (defined in the data dictionary).</p>
+<p>TODO: Why convert to NaN and not clip?</p>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This function was adapted from the original implementation in
+<code>quality.py</code> by Bram van Es.</p>
+</div>
+
+
+<p><span class="doc-section-title">Parameters:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Description</th>
+          <th>Default</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td><code>df</code></td>
+            <td>
+                  <code>pandas DataFrame</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with the clean data to be checked.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Cleaning can be done using the function clean_dataframe</p>
+</div>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>df_data_dictionary</code></td>
+            <td>
+                  <code>pandas DataFrame</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with data dictionary information. It should have
+at least the following columns:</p>
+<ul>
+<li><code>Computer name</code> - The computer name of each parameter.</li>
+<li><code>Min</code> - Minimal allowed value</li>
+<li><code>Max</code> - Maximum allowed value</li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If the parameter has no min or max values, these should be
+filled in as a single dash (<code>-</code>).</p>
+</div>
+              </div>
+            </td>
+            <td>
+                <em>required</em>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>machine</code></td>
+            <td>
+                  <code>str</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>What machine does the data correspond to. Possible values are:</p>
+<ul>
+<li><code>sapphire</code> or <code>sapph</code> - Sapphire</li>
+<li><code>alinity</code> or <code>alin</code> - Alinity hq</li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>No functionality yet, but might be useful in the future.</p>
+</div>
+              </div>
+            </td>
+            <td>
+                  <code>None</code>
+            </td>
+          </tr>
+          <tr class="doc-section-item">
+            <td><code>verbose</code></td>
+            <td>
+                  <code>bool</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Define if verbose output will be printed (<code>True</code>) or not (<code>False</code>).</p>
+              </div>
+            </td>
+            <td>
+                  <code>True</code>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+
+    <p><span class="doc-section-title">Returns:</span></p>
+    <table>
+      <thead>
+        <tr>
+<th>Name</th>          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+<td><code>df_qc</code></td>            <td>
+                  <code>pandas DataFrame</code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>DataFrame with quality controlled data.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
+
+            <details class="quote">
+              <summary>Source code in <code>pycelldyn/quality_control.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span>
+<span class="normal">430</span>
+<span class="normal">431</span>
+<span class="normal">432</span>
+<span class="normal">433</span>
+<span class="normal">434</span>
+<span class="normal">435</span>
+<span class="normal">436</span>
+<span class="normal">437</span>
+<span class="normal">438</span>
+<span class="normal">439</span>
+<span class="normal">440</span>
+<span class="normal">441</span>
+<span class="normal">442</span>
+<span class="normal">443</span>
+<span class="normal">444</span>
+<span class="normal">445</span>
+<span class="normal">446</span>
+<span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span>
+<span class="normal">454</span>
+<span class="normal">455</span>
+<span class="normal">456</span>
+<span class="normal">457</span>
+<span class="normal">458</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span>
+<span class="normal">472</span>
+<span class="normal">473</span>
+<span class="normal">474</span>
+<span class="normal">475</span>
+<span class="normal">476</span>
+<span class="normal">477</span>
+<span class="normal">478</span>
+<span class="normal">479</span>
+<span class="normal">480</span>
+<span class="normal">481</span>
+<span class="normal">482</span>
+<span class="normal">483</span>
+<span class="normal">484</span>
+<span class="normal">485</span>
+<span class="normal">486</span>
+<span class="normal">487</span>
+<span class="normal">488</span>
+<span class="normal">489</span>
+<span class="normal">490</span>
+<span class="normal">491</span>
+<span class="normal">492</span>
+<span class="normal">493</span>
+<span class="normal">494</span>
+<span class="normal">495</span>
+<span class="normal">496</span>
+<span class="normal">497</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">qc_plausible_range</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df_data_dictionary</span><span class="p">,</span> <span class="n">machine</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot; `qc_plausible_range`</span>
+
+<span class="sd">    Perform quality control (QC) by converting values that are below</span>
+<span class="sd">    or above an given threshold (defined in the data dictionary).</span>
+
+<span class="sd">    TODO: Why convert to NaN and not clip?</span>
+
+<span class="sd">    !!! info</span>
+<span class="sd">        This function was adapted from the original implementation in</span>
+<span class="sd">        `quality.py` by Bram van Es.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas DataFrame</span>
+<span class="sd">        DataFrame with the clean data to be checked.</span>
+
+<span class="sd">        !!! tip</span>
+<span class="sd">            Cleaning can be done using the function clean_dataframe</span>
+
+<span class="sd">    df_data_dictionary : pandas DataFrame</span>
+<span class="sd">        DataFrame with data dictionary information. It should have</span>
+<span class="sd">        at least the following columns:</span>
+
+<span class="sd">        * `Computer name` - The computer name of each parameter.</span>
+<span class="sd">        * `Min` - Minimal allowed value</span>
+<span class="sd">        * `Max` - Maximum allowed value</span>
+
+<span class="sd">        !!! tip</span>
+<span class="sd">            If the parameter has no min or max values, these should be</span>
+<span class="sd">            filled in as a single dash (`-`).</span>
+
+<span class="sd">    machine : str</span>
+<span class="sd">        What machine does the data correspond to. Possible values are:</span>
+
+<span class="sd">        * `sapphire` or `sapph` - Sapphire</span>
+<span class="sd">        * `alinity` or `alin` - Alinity hq</span>
+
+<span class="sd">        !!! info</span>
+<span class="sd">            No functionality yet, but might be useful in the future.</span>
+
+<span class="sd">    verbose : bool</span>
+<span class="sd">        Define if verbose output will be printed (`True`) or not (`False`).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df_qc : pandas DataFrame</span>
+<span class="sd">        DataFrame with quality controlled data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">df_qc</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="c1"># Check that columns of interest are present in the data dictionary.</span>
+    <span class="n">cols_interest</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Computer name&#39;</span><span class="p">,</span> <span class="s1">&#39;Min&#39;</span><span class="p">,</span> <span class="s1">&#39;Max&#39;</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cols_interest</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df_data_dictionary</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Column &#39;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">&#39; not present in df_data_dictionary&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Select the data dictionary&#39;s columns of interest.</span>
+    <span class="n">df_data_dictionary</span> <span class="o">=</span> <span class="n">df_data_dictionary</span><span class="p">[</span><span class="n">cols_interest</span><span class="p">]</span>
+    <span class="n">df_data_dictionary</span> <span class="o">=</span> <span class="n">df_data_dictionary</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Computer name&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Make sure that Min and Max columns are cast to floats properly.</span>
+    <span class="c1"># `-` are replaced to `np.nan`.</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Min&#39;</span><span class="p">,</span> <span class="s1">&#39;Max&#39;</span><span class="p">]:</span>
+        <span class="n">df_data_dictionary</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_data_dictionary</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+        <span class="n">df_data_dictionary</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_data_dictionary</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+
+    <span class="c1"># Try to perform QC on all data columns.</span>
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_qc</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+
+        <span class="c1"># Check that data column exists in the data dictionary.</span>
+        <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df_data_dictionary</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+
+            <span class="n">col_min</span> <span class="o">=</span> <span class="n">df_data_dictionary</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">col</span><span class="p">,</span> <span class="s1">&#39;Min&#39;</span><span class="p">]</span>
+            <span class="n">col_max</span> <span class="o">=</span> <span class="n">df_data_dictionary</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">col</span><span class="p">,</span> <span class="s1">&#39;Max&#39;</span><span class="p">]</span>
+
+            <span class="c1"># Perform QC only when an existing min limit is found.</span>
+            <span class="k">if</span> <span class="n">col_min</span> <span class="o">==</span> <span class="n">col_min</span><span class="p">:</span>
+                <span class="n">df_qc</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_qc</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">col_min</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">QC for plausible range (min = </span><span class="si">{</span><span class="n">col_min</span><span class="si">}</span><span class="s2">) performed on </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">QC for plausible range (min) NOT performed on </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> due to NaN min value.&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Perform QC only when an existing max limit is found.</span>
+            <span class="k">if</span> <span class="n">col_max</span> <span class="o">==</span> <span class="n">col_max</span><span class="p">:</span>
+                <span class="n">df_qc</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df_qc</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">col_max</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">QC for plausible range (max = </span><span class="si">{</span><span class="n">col_max</span><span class="si">}</span><span class="s2">) performed on </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">QC for plausible range (max) NOT performed on </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> due to NaN max value.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># If the column does not exist, do nothing.</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\t</span><span class="s2">Column </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2"> not present df_data_dictionary. No plausible range QC performed.&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_qc</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1-2.1-2M12.5 7v5.2l4 2.4-1 1L11 13V7h1.5M11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2v1.8Z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-06-25</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3h-2Z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date">2024-06-25</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12Z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/UPOD-datascience/pycelldyn" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.path", "navigation.sections", "navigation.indexes", "navigation.top", "search.suggest", "search.highlight", "search.share"], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.ad660dcc.min.js"></script>
+      
+    
+  </body>
+</html>
