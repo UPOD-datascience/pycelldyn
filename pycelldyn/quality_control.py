@@ -11,7 +11,7 @@ import numpy as np
 import pycelldyn.miscellaneous as misc
 
 #%%
-def perform_qc(df, qc_types=['wbc_scatter', 'rbc_scatter', 'plausible_range', 'flags'], machine=None, verbose=True):
+def perform_qc(df, qc_types=['wbc_scatter', 'rbc_scatter', 'plausible_range', 'flags'], df_data_dictionary=None, machine=None, verbose=True):
     """ `perform_qc`
 
     Perform quality control (QC) on the data of the given DataFrame.
@@ -37,6 +37,14 @@ def perform_qc(df, qc_types=['wbc_scatter', 'rbc_scatter', 'plausible_range', 'f
         | `fail` or `failure`                | Set parameter values to `NaN` based on corresponding flags)     |                                                                   |
         | `standard_values`                  | Set standard values to a given set of parameters                | Not recommended!                                                  |
         | `all`                              | All of the previous QC                                          |                                                                   |
+
+    df_data_dictionary : pandas DataFrame, optional
+        DataFrame with data dictionary information. Required if 'plausible_range' is in qc_types.
+        It should have at least the following columns:
+
+        * `Computer name` - The computer name of each parameter.
+        * `Min` - Minimal allowed value
+        * `Max` - Maximum allowed value
 
     machine : str
         What machine does the data correspond to. Possible values are:
@@ -66,6 +74,9 @@ def perform_qc(df, qc_types=['wbc_scatter', 'rbc_scatter', 'plausible_range', 'f
     if (qc_types == 'all') or ('all' in qc_types):
         qc_types = qc_types_possible
 
+    # Check if plausible_range is requested but df_data_dictionary is not provided
+    if ('plausible_range' in qc_types) and (df_data_dictionary is None):
+        raise ValueError("df_data_dictionary is required when 'plausible_range' is in qc_types.")
 
     # Perform each of the QC types.
     for qc in qc_types:
@@ -84,7 +95,7 @@ def perform_qc(df, qc_types=['wbc_scatter', 'rbc_scatter', 'plausible_range', 'f
                     df_qc = qc_rbc(df_qc)
 
                 case 'plausible_range':
-                    df_qc = qc_plausible_range(df_qc)
+                    df_qc = qc_plausible_range(df_qc, df_data_dictionary)
 
                 case 'flags' | 'suspicious_flags':
                     pass
