@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as fh:
 LONG_DESCRIPTION_TYPE = 'text/markdown'
 
 NAME = 'PyCellDyn'
-AUTHOR = 'Arturo Moncada-Torres'
+AUTHOR = 'Arturo Moncada-Torres, Feline Spijkerboer, Bram van Es'
 AUTHOR_EMAIL = 'a.moncadatorres@umcutrecht.nl'
 
 DESCRIPTION = 'A Python package for working with CELL-DYN (i.e., Sapphire and Alinity hq) data.'
